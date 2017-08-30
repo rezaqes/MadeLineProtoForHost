@@ -6,6 +6,6 @@
 https://t.me/wecangp/81
 
 کانال آموزشی:
-@WeCanGP
+@WeCanGP | @devpixel
 </p>
 </div>
