@@ -645,7 +645,7 @@
 												$peer = trim($req[2]);
 											}
 											
-											$InputMedia = ['_' => 'inputMediaPhoto', 'id' => ['_' => 'inputPhoto', 'id' => $id, 'access_hash' => $access_hash], 'caption' => 'عکس شماره '.$counter.' پروفایل '.$parms['user_id'].'  |  گروه وی کن @devpixel'];
+											$InputMedia = ['_' => 'inputMediaPhoto', 'id' => ['_' => 'inputPhoto', 'id' => $id, 'access_hash' => $access_hash], 'caption' => 'عکس شماره '.$counter.' پروفایل '.$parms['user_id'].'  |  گروه پیکسل @devpixel'];
 											
 											$p = ['peer' => $peer, 'media' => $InputMedia];			
 											$res = $MadelineProto->messages->sendMedia($p);
