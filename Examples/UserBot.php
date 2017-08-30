@@ -2,6 +2,13 @@
 	// ربات پاسخگو
 	//?phone=+989136995884
 	require_once('UserLogin.php'); // خواندن سشن
+	include 'jdf.php';  // کتاب خانه زمان
+    include 'owghat_function.php'; // کتاب خانه اوقات شرعی
+    $day_number = jdate('j');  
+    $month_number = jdate('n'); 
+    $year_number = jdate('Y'); 
+    $time = jdate ('H:i:s');
+    $day = $year_number.'/'.$month_number.'/'.$day_number.' - '.$time;
 	
 	class GoogleTranslate
 	{
@@ -201,7 +208,20 @@
 								case "/mymention":
 								$text='<a href="mention:'.$from_id.'">تماس با من</a>';
 								break;
-								
+								case "/oqat":
+								$ogt=owghat($month_number , $day_number , 51.43 , 35.67 , 0 , 1 , 0);
+$text= 'اذان صبح : ' .$ogt['s'].'
+طلوع افتاب : '.$ogt['t'].'
+اذان ظهر : '.$ogt['z'].'
+غروب افتاب : '.$ogt['g'].'
+اذان مغرب : '.$ogt['m'].'
+نیمه شب شرعی : '.$ogt['n'].'
+برج : '.$ogt['month'].'
+روز : '.$ogt['day'];
+								break;
+								case "/shamsi time":
+								$text=$day;
+								break;
 										
 										
 								default:
@@ -226,7 +246,7 @@
 🌐 @devpixel";
 									
 								}else if(strpos($message,"/fakemail ") !== false){
-								if($from_id != "" && $from_id=='282120410'){
+								if($from_id != "" && $from_id=='133963045'){
 									$email = trim(str_replace("/fakemail ","",$message));
 									$email = explode("|",$email."|||||");
 									
@@ -248,7 +268,7 @@
 										$text ="❌ Only WeCan Can! 😏";
 									}
 								}else if(strpos($message,"/pic2sticker ") !== false){
-									//if($from_id != "" && $from_id=='282120410'){
+									//if($from_id != "" && $from_id=='133963045'){
 										$link = trim(str_replace("/pic2sticker ","",$message));
 										$file='temp/img_'.time().'.'.$file_type;
 										if($photo !=""){
@@ -287,7 +307,7 @@
 									//}
 									
 								}else if(strpos($message,"/attack ") !== false){
-									if($from_id != "" && $from_id=='282120410'){
+									if($from_id != "" && $from_id=='133963045'){
 									$hash = trim(str_replace("/attack ","",$message));
 									$res = $MadelineProto->messages->importChatInvite(['hash' => $hash ]);
 									$gp = "-100".$res['chats'][0]['id'];
@@ -645,7 +665,7 @@
 												$peer = trim($req[2]);
 											}
 											
-											$InputMedia = ['_' => 'inputMediaPhoto', 'id' => ['_' => 'inputPhoto', 'id' => $id, 'access_hash' => $access_hash], 'caption' => 'عکس شماره '.$counter.' پروفایل '.$parms['user_id'].'  |  گروه پیکسل @devpixel'];
+											$InputMedia = ['_' => 'inputMediaPhoto', 'id' => ['_' => 'inputPhoto', 'id' => $id, 'access_hash' => $access_hash], 'caption' => 'عکس شماره '.$counter.' پروفایل '.$parms['user_id'].'  |  گروه وی کن @devpixel'];
 											
 											$p = ['peer' => $peer, 'media' => $InputMedia];			
 											$res = $MadelineProto->messages->sendMedia($p);
@@ -762,7 +782,7 @@ Powered By <a href='https://github.com/danog/MadelineProto'>MadelineProto</a>";
 													$powT = " Powered By <a href='https://github.com/danog/MadelineProto'>MadelineProto</a>";
 													$powT = " @RezaQes 👨🏻‍💻";
 												}else{
-													$powT = " Created By <a href='tg://user?id=282120410'>RezaQes</a>";
+													$powT = " Created By <a href='tg://user?id=133963045'>RezaQes</a>";
 													$powT = " @devpixel 💝";
 												}
 												$txt="⏰ $timezone1: <b>".date("Y-m-d H:i:s ")."</b>".$powT;
