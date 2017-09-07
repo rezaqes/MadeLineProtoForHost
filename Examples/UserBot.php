@@ -9,7 +9,14 @@
     $year_number = jdate('Y'); 
     $time = jdate ('H:i:s');
     $day = $year_number.'/'.$month_number.'/'.$day_number.' - '.$time;
+	$url_temp_dir='http://domain.com/MadeLineProtoForHost-master/Examples/';// ادرس محل فایل یوزر بات توجه شود اسلش پس از فولدر اکسمپل حتما گذاشته شود
+// برای تبدیل فایل به ادرس باید فولدر temp  از پیش در فولدر اکسمپل ساخته شده باشد
 	
+	function save($filename,$TXTdata){
+	$myfile = fopen($filename, "w") or die("Unable to open file!");
+	fwrite($myfile, "$TXTdata");
+	fclose($myfile);
+	}
 	class GoogleTranslate
 	{
 
@@ -142,7 +149,7 @@
 				}
 				if(isset($media['document'])){
 					$document = $media['document'];
-					//$thumb = $document['thumb'];
+					$thumb = $document['thumb'];
 					
 					switch($document['mime_type']){
 						case "image/png":
@@ -162,7 +169,48 @@
 						$message = '/pic2sticker ';
 					}
 				}
-				
+				//////////media
+				 $res = json_encode($update, JSON_PRETTY_PRINT);
+                if ($res == '') {
+                    $res = var_export($update, true);
+                }
+				 if (isset($update['update']['message']['media']) && ($update['update']['message']['media']['_'] == 'messageMediaPhoto' || $update['update']['message']['media']['_'] == 'messageMediaDocument')) {
+                        $time = time();
+						$file_info = $MadelineProto->get_download_info($update['update']['message']['media']);
+						if(isset($file_info['name'])){
+							
+							$file_name=$file_info['name'];
+							
+						}
+						if(isset($file_info['ext'])){
+							
+							$file_ext=$file_info['ext'];
+							
+						}
+						if(isset($file_info['size'])){
+							
+							$file_s=$file_info['size'];
+							
+						}
+						else
+						{$file_s='???';}
+						if(isset($file_info['mime'])){
+							
+							$file_format=$file_info['mime'];
+							
+						}
+						
+                        $file = $MadelineProto->download_to_file($update['update']['message']['media'], 'temp/'.$file_name.$file_ext);
+                        $MadelineProto->messages->sendMessage(['peer' => $update['update']['message']['from_id'], 'message' => 'Downloaded to '.$file.' in '.(time() - $time).' seconds
+						🌐 Download url ='.$url_temp_dir.$file.'
+
+⚖️ Flie size ='.$file_s.'
+
+🛠 File type ='.$file_format.'
+
+😎 Coded by @rezaqes', 'reply_to_msg_id' => $update['update']['message']['id'], 'entities' => [['_' => 'messageEntityPre', 'offset' => 0, 'length' => strlen($res), 'language' => 'json']]]);
+						              }
+					//////////media
 				
 				
 				$sent=0;
@@ -184,7 +232,7 @@
 						$uniq = $from_id."_".$mid."_".$date;
 						
 						if(!in_array($uniq,$SentMSGs) && $peer !=''){
-							/*
+							
 							if($media !=""){
 								$name = 'thumb_'.time().'.jpg';
 								$file = '../temp/'.$name;
@@ -194,7 +242,7 @@
 								break;
 								
 							}
-							*/
+							
 				
 							switch($message){
 								case "/start2":
@@ -802,6 +850,7 @@ Powered By <a href='https://github.com/danog/MadelineProto'>MadelineProto</a>";
 										<b>/time</b> Asia/Tehran -> اعلام زمان و تاریخ
 										<b>/link2file</b> LINK -> تبدیل لینک به فایل
 										<b>/html2text</b> HTML -> تبدیل اچ تی ام ال به تکست
+										<b>تبدیل فایل به لینک</b> HTML -> برای تبدیل فایل به لینک کافیه اون فایل رو برای من بفرستی یا فروارد کنی
 										';
 									}else{
 									
