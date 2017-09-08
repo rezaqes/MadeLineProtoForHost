@@ -2,7 +2,7 @@
 	
 	require_once '__madeline_config.php'; // فایل کانفیگ
 	require_once $libPath.'vendor/autoload.php'; // فراخوانی لودر کتابخانه میدلاین
-	require_once $libPath.'src/danog/MadelineProto/VoIP/php-libtgvoip.php';
+	
 	
 	if(!file_exists($sessionsDir)){
 		mkdir($sessionsDir);
