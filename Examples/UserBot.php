@@ -233,15 +233,7 @@
 						
 						if(!in_array($uniq,$SentMSGs) && $peer !=''){
 							
-							if($media !=""){
-								$name = 'thumb_'.time().'.jpg';
-								$file = '../temp/'.$name;
-								$res = $MadelineProto->download_to_file($thumb, $file);
-								$text =  "http://tlbots.cf/temp/".$name;
-								$m = $MadelineProto->messages->sendMessage(['peer' => $peer, 'message' => $text, 'parse_mode' => 'HTML' ]);	
-								break;
-								
-							}
+						
 							
 				
 							switch($message){
@@ -268,6 +260,11 @@ $text= 'اذان صبح : ' .$ogt['s'].'
 روز : '.$ogt['day'];
 								break;
 								case "/shamsi time":
+								$day_number = jdate('j');  
+                                $month_number = jdate('n'); 
+                                $year_number = jdate('Y'); 
+                                $time = jdate ('H:i:s');
+                                $day = $year_number.'/'.$month_number.'/'.$day_number.' - '.$time;
 								$text=$day;
 								break;
 										
@@ -845,11 +842,18 @@ Powered By <a href='https://github.com/danog/MadelineProto'>MadelineProto</a>";
 										دستورات من:
 										<b>/start2</b>  -> شروع
 										<b>/rezaqes</b>  -> سازنده
+										<b>/shamsi time</b>  -> ارسال زمان شمسی
+										<b>/oqat</b>  -> ارسال اوقات شرعی
 										<b>/mymention</b> [TEXT] -> منشن شما
+										<b>/translate</b> [Language] | [TEXT]  -> ترجمه متن شما مثال /translate en | سلام
+										<b>/optimizeSite</b> LINK -> بهینه سازی وب سایت شما
+										<b>/web2pdf</b> LINK -> تهیه پی دی اف از صفحه وب سایت
+										<b>/html2pdf</b> HTML ->تبدیل اچ تی ام ال به پی دی اف
 										<b>/madeline</b> help -> تست متدهای میدلاین
 										<b>/time</b> Asia/Tehran -> اعلام زمان و تاریخ
 										<b>/link2file</b> LINK -> تبدیل لینک به فایل
 										<b>/html2text</b> HTML -> تبدیل اچ تی ام ال به تکست
+										<b>/translate </b> [TEXT] -> منشن شما
 										<b>تبدیل فایل به لینک</b> HTML -> برای تبدیل فایل به لینک کافیه اون فایل رو برای من بفرستی یا فروارد کنی
 										';
 									}else{
