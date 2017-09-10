@@ -837,8 +837,31 @@ Powered By <a href='https://github.com/danog/MadelineProto'>MadelineProto</a>";
 										}
 								
 										
-									}else if($channel_id==""){
-										$text='سلام من ربات میدلاین هستم! منو @RezaQes ساخته!
+									}elseif (strpos($message,"/insta2file ") !== false and isset ($update['update']['message']['media']['webpage']['document']['id']))
+								
+								{
+									$video_id=$update['update']['message']['media']['webpage']['document']['id'];
+                                    $video_hash=$update['update']['message']['media']['webpage']['document']['access_hash'];
+                                    $inputDocument = ['_' => 'inputDocument', 'id' => $video_id, 'access_hash' => $video_hash];
+                                    $inputMediaDocument = ['_' => 'inputMediaDocument', 'id' => $inputDocument, 'caption' => '😎 @RezaQes'];
+                                    $Updates = $MadelineProto->messages->sendMedia(['peer' => $peer, 'media' => $inputMediaDocument]);
+									$SentMSGs[]=$uniq;
+									$sent=1;
+								}
+									elseif (strpos($message,"/insta2file ") !== false and isset ($update['update']['message']['media']['webpage']['photo']['id']))
+								
+								{
+									$photo_id=$update['update']['message']['media']['webpage']['photo']['id'];
+                                    $photo_hash=$update['update']['message']['media']['webpage']['photo']['access_hash'];
+                                    $inputPhoto = ['_' => 'inputPhoto', 'id' => $photo_id, 'access_hash' => $photo_hash];
+                                    $inputMediaPhoto = ['_' => 'inputMediaPhoto', 'id' => $inputPhoto, 'caption' => '😎 @RezaQes'];
+                                    $Updates = $MadelineProto->messages->sendMedia([ 'peer' => $peer, 'media' => $inputMediaPhoto,]);
+									$SentMSGs[]=$uniq;
+									$sent=1;
+								}
+							
+									else if($channel_id==""){
+									$text='سلام من ربات میدلاین هستم! منو @RezaQes ساخته!
 										دستورات من:
 										<b>/start2</b>  -> شروع
 										<b>/rezaqes</b>  -> سازنده
@@ -854,6 +877,7 @@ Powered By <a href='https://github.com/danog/MadelineProto'>MadelineProto</a>";
 										<b>/link2file</b> LINK -> تبدیل لینک به فایل
 										<b>/html2text</b> HTML -> تبدیل اچ تی ام ال به تکست
 										<b>/translate </b> [TEXT] -> منشن شما
+										<b>/insta2file</b> LINK -> تبدیل لینک اشتراک گذاری اینستاگرام به فایل
 										<b>تبدیل فایل به لینک</b> HTML -> برای تبدیل فایل به لینک کافیه اون فایل رو برای من بفرستی یا فروارد کنی
 										';
 									}else{
