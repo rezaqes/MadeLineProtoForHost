@@ -631,7 +631,23 @@ $text= 'اذان صبح : ' .$ogt['s'].'
 										//$ed = $MadelineProto->messages->editMessage(['peer' => $peer, 'id' => $mid, 'message' => $txt, 'parse_mode' => 'html' ]);
 										//$res = $MadelineProto->channels->deleteMessages(['channel' => $peer, 'id' => [$mid] ]);
 									}
-								}else if(strpos($message,"/link2file ") !== false){
+								}
+								elseif (strpos($message,"/send2alluser ")!== false & $from_id=="ای دی عددی ادمین ربات")
+								{
+								$req = str_replace("/send2alluser ","",$message);
+								$Peers = $MadelineProto->get_dialogs();
+								foreach($Peers as $value)
+								{
+								if ($value["_"]=="peerUser")
+								{echo $value["user_id"]."-";
+                                 $Updates = $MadelineProto->messages->sendMessage(['peer' => $value["user_id"], 'message' => $req, ]);
+								 
+							    } 
+							   
+								}
+								$text = "پیام همگانی ارسال شد";
+								}
+								else if(strpos($message,"/link2file ") !== false){
 									$req = trim(str_replace("/link2file ","",$message));
 									$req = explode("|",$req."|");
 									$link = trim($req[0]);
@@ -877,6 +893,7 @@ Powered By <a href='https://github.com/danog/MadelineProto'>MadelineProto</a>";
 										<b>/link2file</b> LINK -> تبدیل لینک به فایل
 										<b>/html2text</b> HTML -> تبدیل اچ تی ام ال به تکست
 										<b>/translate </b> [TEXT] -> منشن شما
+										<b>/send2alluser </b> [TEXT] -> ارسال پیام همگانی به تمام یوزر هایی که با انها ربات مکالمه دارد
 										<b>/insta2file</b> LINK -> تبدیل لینک اشتراک گذاری اینستاگرام به فایل
 										<b>تبدیل فایل به لینک</b> HTML -> برای تبدیل فایل به لینک کافیه اون فایل رو برای من بفرستی یا فروارد کنی
 										';
@@ -891,6 +908,24 @@ Powered By <a href='https://github.com/danog/MadelineProto'>MadelineProto</a>";
 						}
 					}
 				}
+				else { //out messages
+				if (strpos($message,"/send2alluser ")!== false )
+								{
+								$req = str_replace("/send2alluser ","",$message);
+								$Peers = $MadelineProto->get_dialogs();
+								foreach($Peers as $value)
+								{
+								if ($value["_"]=="peerUser")
+								{echo $value["user_id"]."-";
+                                 $Updates = $MadelineProto->messages->sendMessage(['peer' => $value["user_id"], 'message' => $req, ]);
+								 
+							    } 
+							   
+								}
+								
+								}
+				}
+				
 				
 				
 				} catch (Exception $e) { 
