@@ -908,23 +908,7 @@ Powered By <a href='https://github.com/danog/MadelineProto'>MadelineProto</a>";
 						}
 					}
 				}
-				else { //out messages
-				if (strpos($message,"/send2alluser ")!== false )
-								{
-								$req = str_replace("/send2alluser ","",$message);
-								$Peers = $MadelineProto->get_dialogs();
-								foreach($Peers as $value)
-								{
-								if ($value["_"]=="peerUser")
-								{echo $value["user_id"]."-";
-                                 $Updates = $MadelineProto->messages->sendMessage(['peer' => $value["user_id"], 'message' => $req, ]);
-								 
-							    } 
-							   
-								}
-								
-								}
-				}
+				
 				
 				
 				
